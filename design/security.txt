@@ -1,0 +1,24 @@
+The access session/tokens are stored in a redis database
+
+redis keys: email,token
+
+database user table:  email, pwd, attemps
+
+
+1) when authentication success, add a token into token field, reset attemps to 0
+2) when authentication fails, increment attemps field.
+3) when attemps is 5, lock account until email field in redis table expires, before next authentication.
+
+
+
+Tables:
+users
+
+user_role:
+
+roles:
+
+access:
+
+functions:
+

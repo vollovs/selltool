@@ -1,0 +1,11 @@
+JWT libraries
+Most modern languages have JWT libraries available. We recommend you use one of these libraries (or other JWT-compatible libraries) before trying to hand-craft the JWT token.
+Language	Library
+Java	atlassian-jwt and jsontoken
+Python	pyjwt
+Node.js	node-jwt-simple
+Ruby	ruby-jwt
+PHP	firebase php-jwt and luciferous jwt
+.NET	jwt
+Haskell	haskell-jwt
+The JWT decoder is a handy web based decoder for Atlassian Connect JWT tokens.

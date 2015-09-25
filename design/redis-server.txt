@@ -1,0 +1,94 @@
+4. Create Directories and Move Redis Config File
+
+sudo mkdir /etc/redis
+sudo mv redis.conf /etc/redis/redis.conf
+
+5. Configure Redis.Conf
+
+sudo nano /etc/redis/redis.conf
+daemonize yes
+bind 127.0.0.1
+dir /var/lib/redis
+
+
+6. Download init Script, and Move Redis Server
+
+From the Redis Directory:
+cd src
+wget https://raw.github.com/gist/1053791/880a4a046e06028e160055406d02bdc7c57f3615/redis-server
+sudo mv redis-server /etc/init.d/redis-server
+sudo mv redis-cli /etc/init.d/redis-cli
+sudo chmod +x /etc/init.d/redis-server
+
+
+
+7. Change Redis-Server Settings
+
+nano /etc/init.d/redis-server
+[..]
+DAEMON=/usr/local/bin/redis-server
+[..]
+ 
+
+8. Create Redis User and Log Files
+
+sudo useradd redis
+sudo mkdir -p /var/lib/redis
+sudo mkdir -p /var/log/redis
+sudo chown redis.redis /var/lib/redis
+sudo chown redis.redis /var/log/redis
+ 
+
+9. Auto-Enable Redis-Server
+
+sudo update-rc.d redis-server defaults
+
+10. Start Redis Server
+
+sudo /etc/init.d/redis-server start
+In general, the following commands can be used to start, stop, or restart redis-server:
+
+sudo /etc/init.d/redis-server start (stop) (restart)
+Or,
+
+sudo service redis-server start (stop) (restart)
+ 
+
+11. And Finally, to Use Redis Command Line
+
+cd /etc/init.d
+./redis-cli
+
+
+
+
+root@leah:/usr/local/redis-2.6.16/utils# ./install_server.sh
+Welcome to the redis service installer
+This script will help you easily set up a running redis server
+
+
+Please select the redis port for this instance: [6379]
+Selecting default: 6379
+Please select the redis config file name [/etc/redis/6379.conf]
+Selected default - /etc/redis/6379.conf
+Please select the redis log file name [/var/log/redis_6379.log]
+Selected default - /var/log/redis_6379.log
+Please select the data directory for this instance [/var/lib/redis/6379]
+Selected default - /var/lib/redis/6379
+Please select the redis executable path [/usr/local/bin/redis-server]
+s#^port [0-9]{4}$#port 6379#;s#^logfile .+$#logfile /var/log/redis_6379.log#;s#^dir .+$#dir /var/lib/redis/6379#;s#^pidfile .+$#pidfile /var/run/redis_6379.pid#;s#^daemonize no$#daemonize yes#;
+Copied /tmp/6379.conf => /etc/init.d/redis_6379
+Installing service...
+update-rc.d: warning: /etc/init.d/redis_6379 missing LSB information
+update-rc.d: see <http://wiki.debian.org/LSBInitScripts>
+ Adding system startup for /etc/init.d/redis_6379 ...
+   /etc/rc0.d/K20redis_6379 -> ../init.d/redis_6379
+   /etc/rc1.d/K20redis_6379 -> ../init.d/redis_6379
+   /etc/rc6.d/K20redis_6379 -> ../init.d/redis_6379
+   /etc/rc2.d/S20redis_6379 -> ../init.d/redis_6379
+   /etc/rc3.d/S20redis_6379 -> ../init.d/redis_6379
+   /etc/rc4.d/S20redis_6379 -> ../init.d/redis_6379
+   /etc/rc5.d/S20redis_6379 -> ../init.d/redis_6379
+Success!
+Starting Redis server...
+Installation successful!
